@@ -1,0 +1,81 @@
+<div class="mx-auto max-w-md w-full px-4 py-12">
+  <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+    <!-- Decorative header -->
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-700 p-6 text-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+      </svg>
+      <h1 class="mt-4 text-2xl font-bold text-white">Complete Your Profile</h1>
+      <p class="mt-1 text-blue-100">Personalize your Librarian account</p>
+    </div>
+
+    <div class="p-8">
+      <!-- Flash messages -->
+      <% if alert = flash[:alert] %>
+        <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-lg">
+          <div class="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+            </svg>
+            <p class="ml-3 text-sm font-medium text-red-700"><%= alert %></p>
+          </div>
+        </div>
+      <% end %>
+
+      <% if notice = flash[:notice] %>
+        <div class="mb-6 p-4 bg-green-50 border-l-4 border-green-500 rounded-r-lg">
+          <div class="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+            </svg>
+            <p class="ml-3 text-sm font-medium text-green-700"><%= notice %></p>
+          </div>
+        </div>
+      <% end %>
+
+      <!-- Profile form -->
+      <%= form_with model: @profile, url: profile_index_path, local: true, class: "space-y-6", html: { multipart: true } do |form| %>
+        <div>
+          <%= form.label :user_name, "Username", class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1 relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </div>
+            <%= form.text_field :user_name, required: true, autocomplete: "username", placeholder: "Enter your username", class: "block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400" %>
+          </div>
+          <p class="mt-2 text-xs text-gray-500">This will be visible to other users</p>
+        </div>
+
+        <div>
+          <%= form.label :profile_image, "Profile Image", class: "block text-sm font-medium text-gray-700" %>
+          <div class="mt-1 flex items-center space-x-6">
+            <div class="shrink-0">
+              <% if @profile.profile_image&.attached? %>
+                <%= image_tag @profile.profile_image, class: "h-20 w-20 rounded-full object-cover border-2 border-white shadow-sm" %>
+              <% else %>
+                <div class="h-20 w-20 rounded-full bg-gray-100 border-2 border-white shadow-sm flex items-center justify-center text-gray-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
+              <% end %>
+            </div>
+            <label class="block">
+              <span class="sr-only">Choose profile photo</span>
+              <div class="flex flex-col space-y-2">
+                <%= form.file_field :profile_image, class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer", accept: "image/*" %>
+                <p class="text-xs text-gray-500">JPG, PNG or GIF (Max 2MB)</p>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="pt-6">
+          <%= form.submit "Save Profile", class: "w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

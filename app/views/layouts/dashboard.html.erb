@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%= content_for(:title) || "Librarian | Premium Book Management" %></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="description" content="Premium digital library management system for book collectors and professionals">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= yield :head %>
+
+  <link rel="icon" href="/icon.png" type="image/png">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icon.png">
+
+  <!-- Font imports -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <%= render "layouts/theme" %>
+  <%= javascript_importmap_tags %>
+
+  <style>
+      :root {
+          --font-sans: 'Inter', sans-serif;
+          --font-serif: 'Playfair Display', serif;
+      }
+      body {
+          font-family: var(--font-sans);
+          background-color: #f9fafb;
+      }
+      .font-serif {
+          font-family: var(--font-serif);
+      }
+      .sidebar {
+          scrollbar-width: thin;
+          scrollbar-color: #e5e7eb #f9fafb;
+      }
+      .sidebar::-webkit-scrollbar {
+          width: 6px;
+      }
+      .sidebar::-webkit-scrollbar-track {
+          background: #f9fafb;
+      }
+      .sidebar::-webkit-scrollbar-thumb {
+          background-color: #e5e7eb;
+          border-radius: 3px;
+      }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+<% profile_image = current_user.profile.profile_image.presence || 'https://placekitten.com/150/150' %>
+<!-- Premium Navigation -->
+<div class="flex flex-1">
+  <!-- Sidebar -->
+  <div class="hidden lg:flex lg:flex-shrink-0">
+    <div class="flex w-64 flex-col border-r border-gray-200 bg-white">
+      <!-- Logo -->
+      <div class="flex h-16 shrink-0 items-center px-6">
+        <div class="flex items-center space-x-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+          <span class="text-base font-bold text-gray-900">Librarian</span>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="flex flex-1 flex-col overflow-y-auto sidebar">
+        <nav class="flex-1 space-y-2 px-4 py-4">
+          <%= link_to dashboard_index_path, class: "group flex items-center rounded-lg px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 h-5 w-5 text-gray-500 group-hover:text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            Dashboard
+          <% end %>
+
+          <%= link_to books_path, class: "group flex items-center rounded-lg px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 h-5 w-5 text-gray-500 group-hover:text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+            Books
+          <% end %>
+
+          <%= link_to "#", class: "group flex items-center rounded-lg px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 h-5 w-5 text-gray-500 group-hover:text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+            </svg>
+            Collections
+          <% end %>
+
+          <%= link_to "#", class: "group flex items-center rounded-lg px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 h-5 w-5 text-gray-500 group-hover:text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+            Statistics
+          <% end %>
+
+          <%= link_to "#", class: "group flex items-center rounded-lg px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 h-5 w-5 text-gray-500 group-hover:text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            Calendar
+          <% end %>
+        </nav>
+      </div>
+
+      <!-- User Profile -->
+      <div class="flex shrink-0 border-t border-gray-200 p-4">
+        <%= link_to profile_index_path, class: "flex w-full items-center rounded-lg p-2 hover:bg-gray-50" do %>
+          <img class="h-9 w-9 rounded-full border-2 border-white shadow-sm" src="<%= profile_image %>" alt="User profile">
+          <div class="ml-3 overflow-hidden">
+            <p class="text-sm font-medium text-gray-900 truncate"><%= current_user.profile.user_name %></p>
+            <p class="text-xs text-gray-500 truncate"><%= current_user.email_address %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="flex flex-1 flex-col overflow-hidden">
+    <!-- Top Navigation -->
+    <header class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white/80 backdrop-blur-md px-4 sm:gap-x-6 sm:px-6 lg:px-8">
+      <!-- Mobile menu button -->
+      <button type="button" class="-m-2.5 p-2.5 text-gray-700 lg:hidden" onclick="toggleMobileMenu()">
+        <span class="sr-only">Open sidebar</span>
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+      </button>
+
+      <!-- Search -->
+      <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
+
+      </div>
+
+      <!-- Right side controls -->
+      <div class="flex items-center gap-x-4 lg:gap-x-6">
+        <button type="button" class="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
+          <span class="sr-only">View notifications</span>
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0018 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+          </svg>
+        </button>
+
+        <!-- Separator -->
+        <div class="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-200" aria-hidden="true"></div>
+
+        <!-- Profile dropdown -->
+        <div class="relative">
+          <button type="button" class="-m-1.5 flex items-center p-1.5" id="user-menu-button" aria-expanded="false" aria-haspopup="true" onclick="toggleProfileMenu()">
+            <span class="sr-only">Open user menu</span>
+            <div class="flex items-center">
+              <img class="h-8 w-8 rounded-full border-2 border-white shadow-sm" src="<%= profile_image %>" alt="User profile">
+              <span class="ml-2 hidden lg:flex lg:items-center">
+                  <span class="text-sm font-medium text-gray-900"><%= current_user.profile.user_name %></span>
+                  <svg class="ml-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                  </svg>
+                </span>
+            </div>
+          </button>
+
+          <!-- Dropdown menu -->
+          <div class="absolute right-0 z-10 mt-2.5 hidden w-48 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none" id="profile-menu">
+            <%= link_to "Your Profile", profile_index_path, class: "block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-50" %>
+            <%= link_to "Settings", "#", class: "block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-50" %>
+            <div class="border-t border-gray-200 my-1"></div>
+            <%= button_to "Sign out", sign_out_path, class: "block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-50 w-full text-left",method: :delete %>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile sidebar -->
+    <div class="lg:hidden fixed inset-0 z-50 hidden" id="mobile-sidebar">
+      <div class="fixed inset-0 bg-gray-900/50" onclick="toggleMobileMenu()"></div>
+      <div class="fixed inset-y-0 left-0 flex w-64 flex-col bg-white">
+        <div class="flex h-16 shrink-0 items-center px-6">
+          <div class="flex items-center space-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+            <span class="text-base font-bold text-gray-900">Librarian</span>
+          </div>
+        </div>
+        <div class="flex flex-1 flex-col overflow-y-auto px-4 py-4">
+          <nav class="flex-1 space-y-2">
+            <%= link_to dashboard_index_path, class: "group flex items-center rounded-lg px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 h-5 w-5 text-gray-500 group-hover:text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+              Dashboard
+            <% end %>
+
+            <%= link_to books_path, class: "group flex items-center rounded-lg px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 h-5 w-5 text-gray-500 group-hover:text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+              Books
+            <% end %>
+
+            <%= link_to "#", class: "group flex items-center rounded-lg px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 h-5 w-5 text-gray-500 group-hover:text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+              </svg>
+              Collections
+            <% end %>
+
+            <%= link_to "#", class: "group flex items-center rounded-lg px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 h-5 w-5 text-gray-500 group-hover:text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+              Statistics
+            <% end %>
+
+            <%= link_to "#", class: "group flex items-center rounded-lg px-4 py-3 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-blue-700" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 h-5 w-5 text-gray-500 group-hover:text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              Calendar
+            <% end %>
+          </nav>
+        </div>
+        <div class="shrink-0 border-t border-gray-200 p-4">
+          <%= link_to profile_index_path, class: "flex items-center rounded-lg p-2 hover:bg-gray-50" do %>
+            <img class="h-9 w-9 rounded-full border-2 border-white" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="User profile">
+            <div class="ml-3 overflow-hidden">
+              <p class="text-sm font-medium text-gray-900 truncate">
+                <%= current_user.email_address %>
+              </p>
+              <p class="text-xs text-gray-500 truncate">
+                <%= current_user.profile.user_name %>
+              </p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto bg-gray-50">
+      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <%= yield %>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobile-sidebar');
+        menu.classList.toggle('hidden');
+    }
+
+    function toggleProfileMenu() {
+        const menu = document.getElementById('profile-menu');
+        menu.classList.toggle('hidden');
+    }
+</script>
+</body>
+</html>
