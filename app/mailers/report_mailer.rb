@@ -1,2 +1,0 @@
-class ReportMailer < ApplicationMailer
-end

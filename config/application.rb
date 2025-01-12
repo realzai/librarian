@@ -8,17 +8,8 @@ Bundler.require(*Rails.groups)
 
 module Librarian
   class Application < Rails::Application
-    config.generators do |g|
-      g.template_engine :railsui
-      g.fallbacks[:railsui] = :erb
-    end
-
-    config.to_prepare do
-      Devise::Mailer.layout "mailer"
-    end
-
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.2
+    config.load_defaults 8.0
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.

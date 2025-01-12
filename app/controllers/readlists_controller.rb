@@ -1,2 +1,0 @@
-class ReadlistsController < ApplicationController
-end
