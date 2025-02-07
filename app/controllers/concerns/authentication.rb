@@ -17,6 +17,11 @@ module Authentication
       resume_session
     end
 
+    # @return [User, nil]
+    def current_user
+      Current.session&.user
+    end
+
     def require_authentication
       resume_session || request_authentication
     end

@@ -1,10 +1,15 @@
 Rails.application.routes.draw do
-  resource :session
+  get "sign_up", to: "users#new", as: :new_user
+  get "sign_in", to: "sessions#new", as: :new_session
+  delete 'sign_out', to: 'sessions#destroy', as: :sign_out
+
+  resources :sessions, except: [:destroy,:new]
   resources :passwords, param: :token
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
 
   resources :dashboard, only: [:index]
+  resources :profile, only: [:index, :show]
   resources :books
   resources :genres, only: [:index]
 

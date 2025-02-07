@@ -2,9 +2,10 @@ class BooksController < ApplicationController
   layout 'dashboard'
 
   def index
-    @books = Book.all
+    @books = Book.where(user: current_user)
   end
 
-  def create
+  def new
+    @genres = Genre::all
   end
 end

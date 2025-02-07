@@ -1,5 +1,3 @@
-User::create(email_address: "zaibutcooler@gmail.com",password: "Zai2025$")
-
 genres = [
   'Productivity',
   'Time Management',
