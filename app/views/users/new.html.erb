@@ -1,3 +1,24 @@
 <div>
-  Sign Up
+  <h1>Sign Up</h1>
+  <%= form_with(model: @user, url: create_user_path, local: true) do |form| %>
+    <div>
+      <%= form.label :username %>
+      <%= form.text_field :username %>
+    </div>
+    <div>
+      <%= form.label :email_address %>
+      <%= form.email_field :email_address %>
+    </div>
+    <div>
+      <%= form.label :password %>
+      <%= form.password_field :password %>
+    </div>
+    <div>
+      <%= form.label :password_confirmation %>
+      <%= form.password_field :password_confirmation %>
+    </div>
+    <div>
+      <%= form.submit "Sign Up" %>
+    </div>
+  <% end %>
 </div>
