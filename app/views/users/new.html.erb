@@ -1,24 +1,41 @@
-<div>
-  <h1>Sign Up</h1>
-  <%= form_with(model: @user, url: create_user_path, local: true) do |form| %>
+<div class="mx-auto max-w-[480px] w-full p-6 bg-card border-border border rounded-lg mt-48">
+  <% if alert = flash[:alert] %>
+    <p class="py-3 px-4 bg-red-100 text-red-600 font-medium rounded-lg text-center" id="alert">
+      <%= alert %>
+    </p>
+  <% end %>
+
+  <% if notice = flash[:notice] %>
+    <p class="py-3 px-4 bg-green-100 text-green-600 font-medium rounded-lg text-center" id="notice">
+      <%= notice %>
+    </p>
+  <% end %>
+
+  <h1 class="font-extrabold text-3xl text-gray-900 text-center mb-6">Sign up</h1>
+
+  <%= form_with model: @user, url: create_user_path, local: true, class: "space-y-5" do |form| %>
     <div>
-      <%= form.label :username %>
-      <%= form.text_field :username %>
+      <%= form.label :email_address, "Email Address", class: "block text-gray-700 font-medium" %>
+      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "email", placeholder: "Enter your email address", value: params[:email_address], class: "block w-full px-4 py-3 mt-2 text-gray-900 border rounded-lg shadow-sm border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none" %>
     </div>
+
     <div>
-      <%= form.label :email_address %>
-      <%= form.email_field :email_address %>
+      <%= form.label :password, "Password", class: "block text-gray-700 font-medium" %>
+      <%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Enter your password", maxlength: 72, class: "block w-full px-4 py-3 mt-2 text-gray-900 border rounded-lg shadow-sm border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none" %>
     </div>
+
     <div>
-      <%= form.label :password %>
-      <%= form.password_field :password %>
+      <%= form.label :password_confirmation, "Confirm Password", class: "block text-gray-700 font-medium" %>
+      <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Confirm your password", maxlength: 72, class: "block w-full px-4 py-3 mt-2 text-gray-900 border rounded-lg shadow-sm border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none" %>
     </div>
-    <div>
-      <%= form.label :password_confirmation %>
-      <%= form.password_field :password_confirmation %>
-    </div>
-    <div>
-      <%= form.submit "Sign Up" %>
+
+    <div class="flex items-center justify-between mt-8">
+      <%= form.submit "Sign up", class: "w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-3 rounded-lg text-center shadow-sm transition duration-300" %>
     </div>
   <% end %>
+
+  <div class="text-center mt-4 text-sm text-gray-600">
+    Already have an account?
+    <%= link_to "Sign in", new_session_path, class: "text-blue-600 hover:text-blue-500 font-medium" %>
+  </div>
 </div>

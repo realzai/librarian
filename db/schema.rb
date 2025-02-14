@@ -18,9 +18,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_02_165122) do
     t.string "title", null: false
     t.string "author", null: false
     t.bigint "genre_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["genre_id"], name: "index_books_on_genre_id"
+    t.index ["user_id"], name: "index_books_on_user_id"
   end
 
   create_table "genres", force: :cascade do |t|
@@ -47,5 +49,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_02_165122) do
   end
 
   add_foreign_key "books", "genres"
+  add_foreign_key "books", "users"
   add_foreign_key "sessions", "users"
 end

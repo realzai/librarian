@@ -2,7 +2,7 @@ class BooksController < ApplicationController
   layout 'dashboard'
 
   def index
-    @books = Book.all
+    @books = Book.where(user_id: current_user.id)
   end
 
   def new
@@ -12,8 +12,12 @@ class BooksController < ApplicationController
 
   def create
     @book = Book.new(book_params)
-    @book.save
-    redirect_to books_path
+    @book.user_id = current_user.id
+    if @book.save
+      redirect_to books_path
+    else
+      render :new
+    end
   end
 
   def edit
