@@ -1,5 +1,5 @@
 class GenresController < ApplicationController
-  layout 'dashboard'
+  layout "dashboard"
   def index
     @genres = Genre.all
   end

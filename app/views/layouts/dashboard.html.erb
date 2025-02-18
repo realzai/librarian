@@ -53,6 +53,7 @@
 </head>
 
 <body class="min-h-screen flex flex-col">
+<% profile_image = current_user.profile.profile_image.presence || 'https://placekitten.com/150/150' %>
 <!-- Premium Navigation -->
 <div class="flex flex-1">
   <!-- Sidebar -->
@@ -111,10 +112,10 @@
       <!-- User Profile -->
       <div class="flex shrink-0 border-t border-gray-200 p-4">
         <%= link_to profile_index_path, class: "flex w-full items-center rounded-lg p-2 hover:bg-gray-50" do %>
-          <img class="h-9 w-9 rounded-full border-2 border-white shadow-sm" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="User profile">
+          <img class="h-9 w-9 rounded-full border-2 border-white shadow-sm" src="<%= profile_image %>" alt="User profile">
           <div class="ml-3 overflow-hidden">
-            <p class="text-sm font-medium text-gray-900 truncate">Thomas Anderson</p>
-            <p class="text-xs text-gray-500 truncate">thomas@example.com</p>
+            <p class="text-sm font-medium text-gray-900 truncate"><%= current_user.profile.user_name %></p>
+            <p class="text-xs text-gray-500 truncate"><%= current_user.email_address %></p>
           </div>
         <% end %>
       </div>
@@ -155,9 +156,9 @@
           <button type="button" class="-m-1.5 flex items-center p-1.5" id="user-menu-button" aria-expanded="false" aria-haspopup="true" onclick="toggleProfileMenu()">
             <span class="sr-only">Open user menu</span>
             <div class="flex items-center">
-              <img class="h-8 w-8 rounded-full border-2 border-white shadow-sm" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="User profile">
+              <img class="h-8 w-8 rounded-full border-2 border-white shadow-sm" src="<%= profile_image %>" alt="User profile">
               <span class="ml-2 hidden lg:flex lg:items-center">
-                  <span class="text-sm font-medium text-gray-900">Thomas</span>
+                  <span class="text-sm font-medium text-gray-900"><%= current_user.profile.user_name %></span>
                   <svg class="ml-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                     <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
                   </svg>
@@ -170,7 +171,7 @@
             <%= link_to "Your Profile", profile_index_path, class: "block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-50" %>
             <%= link_to "Settings", "#", class: "block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-50" %>
             <div class="border-t border-gray-200 my-1"></div>
-            <%= link_to "Sign out", "#", class: "block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-50" %>
+            <%= button_to "Sign out", sign_out_path, class: "block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-50 w-full text-left",method: :delete %>
           </div>
         </div>
       </div>
@@ -230,8 +231,12 @@
           <%= link_to profile_index_path, class: "flex items-center rounded-lg p-2 hover:bg-gray-50" do %>
             <img class="h-9 w-9 rounded-full border-2 border-white" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="User profile">
             <div class="ml-3 overflow-hidden">
-              <p class="text-sm font-medium text-gray-900 truncate">Thomas Anderson</p>
-              <p class="text-xs text-gray-500 truncate">thomas@example.com</p>
+              <p class="text-sm font-medium text-gray-900 truncate">
+                <%= current_user.email_address %>
+              </p>
+              <p class="text-xs text-gray-500 truncate">
+                <%= current_user.profile.user_name %>
+              </p>
             </div>
           <% end %>
         </div>
