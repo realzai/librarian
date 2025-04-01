@@ -1,1 +1,22 @@
-<h1>This is Landing Page</h1>
+<div class="flex flex-wrap mt-32">
+  <div class="flex items-center w-full lg:w-1/2">
+    <div class="max-w-2xl mb-8">
+      <h1 class="text-4xl font-bold leading-snug tracking-tight text-primary lg:text-4xl lg:leading-tight xl:text-6xl xl:leading-tight">
+        Manage your books efficiently now
+      </h1>
+      <p class="py-5 text-xl leading-normal text-muted-foreground lg:text-lg xl:text-xl">
+        Librarian is a modern web application that helps you manage your books
+        efficiently. Save your time and your books
+      </p>
+
+      <div class="flex flex-col items-start space-y-3 sm:space-x-4 sm:space-y-0 sm:items-center sm:flex-row">
+        <%= link_to "Get Started",new_session_path,class: "px-8 py-3 text-lg font-medium text-center text-white bg-primary rounded-md "%>
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center justify-center w-full lg:w-1/2">
+    <div class="px-8">
+      <img src="https://media-hosting.imagekit.io//6efd1cddede04433/hero.svg?Expires=1836109613&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=aJgcMPbmYv5H28ihGaOge8v2BhAvFPyFUXVDtSGSxSn0~i~PA11TYwWUXmMV1x69RmiYsKA9ftWg2EoPFZnKeiWTDZilyrcYu0W0k6H9W4dcvTZOhk15g4zT7LJVtNLQkAoS45zS7Aza60EPRkSVTlLR3gXMqVT5kT~Hiw2QEtl1O~mmsz95Xx~UWXSe6bxUEdp0qsGwj34XwIy-b43ol~GM1Snv~DjQPnQm6FOCBd5q716oGJrRXlhkuZTvimshKvpONKYoNPD2k3zFraYVjkrKJRfBMaRGQgqF2vcGfSRyfjv9r9kiDqEI8LajxqnS0M9tFBiJgh8hXsPfur7XAg__" width="616" height="617" class="object-cover" alt="Hero Illustration" loading="eager" />
+    </div>
+  </div>
+</div>

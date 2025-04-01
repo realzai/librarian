@@ -17,12 +17,34 @@
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/icon.png">
 
-  <%# Includes all stylesheet files in app/assets/stylesheets %>
-  <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+  <%= render "layouts/theme" %>
   <%= javascript_importmap_tags %>
 </head>
 
 <body>
-<%= yield %>
+  <header class="h-16 border-b border-border">
+    <nav class="flex justify-between mx-auto max-w-7xl px-4 lg:px-6 items-center h-full">
+      <div class="w-32">
+        <h1 class="text-lg font-bold text-primary">Librarian</h1>
+      </div>
+
+      <div class="flex gap-6">
+        <%= link_to "Home", root_path,class: "text-muted-foreground hover:text-foreground px-2 font-medium" %>
+        <%= link_to "Features", root_path,class: "text-muted-foreground hover:text-foreground px-2 font-medium" %>
+        <%= link_to "Contact", root_path,class: "text-muted-foreground hover:text-foreground px-2 font-medium" %>
+        <%= link_to "Pricings", root_path,class: "text-muted-foreground hover:text-foreground px-2 font-medium" %>
+      </div>
+
+      <div class="flex gap-4 w-32">
+        <%= link_to "Sign In", new_session_path,class: "bg-primary hover:bg-primary/80 text-white py-2 px-5 rounded" %>
+
+        <%#= link_to "Login", new_session_path,class: "bg-primary hover:bg-primary/80 text-white py-2 px-5 rounded" %>
+      </div>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 lg:px-6">
+    <%= yield %>
+  </main>
 </body>
 </html>
