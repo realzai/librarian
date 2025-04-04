@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  layout 'dashboard'
+  layout "dashboard"
 
   def index
     @books = Book.where(user_id: current_user.id)
@@ -7,7 +7,7 @@ class BooksController < ApplicationController
 
   def new
     @book = Book.new
-    @genres = Genre::all
+    @genres = Genre.all
   end
 
   def create
@@ -22,7 +22,7 @@ class BooksController < ApplicationController
 
   def edit
     @book = Book.find(params[:id])
-    @genres = Genre::all
+    @genres = Genre.all
   end
 
   def update
